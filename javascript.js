@@ -1,49 +1,79 @@
 
-//create computer choice function//
+//global variables
+
+let humanChoice;
+let computerChoice;
+let result;
+
+let humanScore = 0;
+let computerScore = 0;
+//
+
+//function to get humanchoice
+function getHumanChoice(){
+  humanChoice = prompt('Rock, paper or scissors?');
+    return humanChoice;
+}
+//
+
+//function to get random computer choice
 function getComputerChoice() {
 
 let number = Math.ceil(Math.random() * 10)
 
 
 if (number == 1 || number == 2 || number == 3 ) {
-    result = "paper";
+    computerChoice = "paper";
   } else if (number == 4 || number == 5 || number == 6 ) {
-    result = "rock";
+    computerChoice = "rock";
   } else {
-    result = "scissors";
+    computerChoice = "scissors";
 
   }
 }
-//create human choice function//
-
-
-let humanChoice = prompt('What do you choose?');
-
-function getHumanChoice(){
-    return humanChoice;
-}
-
-//ask human and log answer but also convert it to lowercase - this will make the comparison simpler//
-
-getHumanChoice();
-humanChoice = humanChoice.toLowerCase();
-console.log(humanChoice);
-
-//run game and log result then compare results and alert results
+//
+//function to play one round and evaluate the results
+function playRound() {
+  getHumanChoice();
+  humanChoice = humanChoice.toLowerCase()
+console.log('You chose', humanChoice);
 
 getComputerChoice();
-console.log(result);
+console.log('The computer chose', computerChoice );
 
+  if ((humanChoice === 'rock' && computerChoice === 'paper') || (humanChoice === 'paper' && computerChoice === 'scissors') || (humanChoice === 'scissors' && computerChoice === 'rock')){
+    result = 'lost'; console.log('You loose.');
+} else if ((humanChoice === 'rock' && computerChoice === 'scissors') || (humanChoice === 'paper' && computerChoice === 'rock') || (humanChoice === 'scissors' && computerChoice === 'paper')) {
+    result = 'won'; console.log('You win.')
+ }     else if ((humanChoice === 'rock' && computerChoice === 'rock') || (humanChoice === 'paper' && computerChoice === 'paper') || (humanChoice === 'scissors' && computerChoice === 'scissors')) {
+    result = 'tie'; console.log('Its a tie.');
+ }
+}
 
+//
+//function to keep score
 
-if ((humanChoice === 'rock' && result === 'paper') || (humanChoice === 'paper' && result === 'scissors') || (humanChoice === 'scissors' && result === 'rock')){
-        alert('You loose');
-    } else if ((humanChoice === 'rock' && result === 'scissors') || (humanChoice === 'paper' && result === 'rock') || (humanChoice === 'scissors' && result === 'paper')) {
-        alert('You win')
-     }     else {
-        alert('Its a tie.')
-     }
+function scoreKeep(){ 
+  if (result == 'won') {humanScore = humanScore + 1}
+  else if (result == 'lost') {computerScore = computerScore +1}
+}
+scoreKeep();
+//
 
+//function to play 5 rounds and announce the final result
 
+function playGame(){
+  playRound();scoreKeep();console.log('the score is ', humanScore, ':', computerScore);
+  playRound();scoreKeep();console.log('the score is ', humanScore, ':', computerScore);
+  playRound();scoreKeep();console.log('the score is ', humanScore, ':', computerScore);
+  playRound();scoreKeep();console.log('the score is ', humanScore, ':', computerScore);
+  playRound();scoreKeep();console.log('the final result is ', humanScore, ':', computerScore);
+if (humanScore > computerScore){console.log('Congartulations, you won this game!')}
+else if ( humanScore < computerScore) {console.log('You lost the game.')};
+}
+//
 
+//run game
+playGame();
 
+//
